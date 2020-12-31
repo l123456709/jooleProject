@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="b5af7b51-3037-4f28-ad4b-b3777a88e119" ChangeDateTime="12/30/2020 19:16:36">
+    <Property Name="ElementName" Value="[dbo].[Credential].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Credential]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Credential_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d3d35576-a409-4d39-ba4a-15076606ca88" ChangeDateTime="12/30/2020 19:21:57">
+    <Property Name="ElementName" Value="[dbo].[Product].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Product]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Produc_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5e066465-e4bd-4150-83c6-532569abbdcf" ChangeDateTime="12/30/2020 19:25:52">
+    <Property Name="ElementName" Value="[dbo].[SubCategory].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[SubCategory]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SubCategory_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="06f11fd9-cef7-49c5-8168-ce775d6b598a" ChangeDateTime="12/30/2020 19:26:43">
+    <Property Name="ElementName" Value="[dbo].[Table1].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Table1]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Category_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f1d5f6e1-2f27-4b57-a53c-d6ba384d577e" ChangeDateTime="12/30/2020 19:28:19">
+    <Property Name="ElementName" Value="[dbo].[PropertyValue].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[PropertyValue]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Property_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8ccfc87d-f880-4d0e-85bc-7e31b2a3c9f2" ChangeDateTime="12/30/2020 19:30:22">
+    <Property Name="ElementName" Value="[dbo].[Property].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Property]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Property_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c900a848-6953-4ea4-bff5-a132c94bdf18" ChangeDateTime="12/30/2020 19:32:34">
+    <Property Name="ElementName" Value="[dbo].[TypeFilter].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TypeFilter]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Property_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5f8b6fde-84df-4c20-ad9b-21370e4e28d1" ChangeDateTime="12/30/2020 19:35:06">
+    <Property Name="ElementName" Value="[dbo].[TechSpecFilter].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[TechSpecFilter]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Property_ID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9a76eaf7-3a1e-4629-bf62-567270f2f148" ChangeDateTime="12/30/2020 19:45:09">
+    <Property Name="ElementName" Value="[dbo].[Product].[Produc_ID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Product]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Product_ID" />
+  </Operation>
+</Operations>
