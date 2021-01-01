@@ -2,7 +2,7 @@
 (
 	[Product_ID] INT NOT NULL PRIMARY KEY, 
     [SubCategory_ID] INT NULL, 
-    [Product_Name] NVARCHAR(50) NULL, 
+    [Product_Name] NVARCHAR(200) NULL, 
     [Product_Image] NVARCHAR(50) NULL, 
     [Series] NVARCHAR(50) NULL, 
     [Model] NVARCHAR(50) NULL, 
