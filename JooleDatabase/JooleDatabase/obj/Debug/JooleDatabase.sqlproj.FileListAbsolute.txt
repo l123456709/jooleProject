@@ -1,9 +1,3 @@
-D:\study\icc\itlize\csharp\projects\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.dacpac
-D:\study\icc\itlize\csharp\projects\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.dll
-D:\study\icc\itlize\csharp\projects\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.pdb
-D:\study\icc\itlize\csharp\projects\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.dll
-D:\study\icc\itlize\csharp\projects\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.pdb
-D:\study\icc\itlize\csharp\projects\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.sqlprojAssemblyReference.cache
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.dacpac
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.dll
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.pdb
