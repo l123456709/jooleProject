@@ -8,3 +8,13 @@ D:\study\icc\itlize\csharp\projects\jooleProject\JooleDatabase\JooleDatabase\obj
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\refactor.xml
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\postdeploy.sql
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\predeploy.sql
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.dacpac
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.dll
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.pdb
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.sqlprojAssemblyReference.cache
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\Model.xml
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\refactor.xml
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\postdeploy.sql
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\predeploy.sql
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.dll
+C:\Users\hu\Documents\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.pdb

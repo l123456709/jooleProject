@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "JooleDatabase"
 :setvar DefaultFilePrefix "JooleDatabase"
-:setvar DefaultDataPath "C:\Users\lucha\AppData\Local\Microsoft\VisualStudio\SSDT\JooleDatabase"
-:setvar DefaultLogPath "C:\Users\lucha\AppData\Local\Microsoft\VisualStudio\SSDT\JooleDatabase"
+:setvar DefaultDataPath "C:\Users\hu\AppData\Local\Microsoft\VisualStudio\SSDT\JooleDatabase"
+:setvar DefaultLogPath "C:\Users\hu\AppData\Local\Microsoft\VisualStudio\SSDT\JooleDatabase"
 
 GO
 :on error exit
@@ -37,6 +37,255 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
 
 GO
 USE [$(DatabaseName)];
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET ARITHABORT ON,
+                CONCAT_NULL_YIELDS_NULL ON,
+                CURSOR_DEFAULT LOCAL 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET PAGE_VERIFY NONE,
+                DISABLE_BROKER 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+ALTER DATABASE [$(DatabaseName)]
+    SET TARGET_RECOVERY_TIME = 0 SECONDS 
+    WITH ROLLBACK IMMEDIATE;
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET QUERY_STORE (CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 367)) 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+PRINT N'Creating [dbo].[Category]...';
+
+
+GO
+CREATE TABLE [dbo].[Category] (
+    [Category_ID]   INT           NOT NULL,
+    [Category_Name] NVARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([Category_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Credential]...';
+
+
+GO
+CREATE TABLE [dbo].[Credential] (
+    [Credential_ID] INT           NOT NULL,
+    [User_Type]     NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Credential_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Product]...';
+
+
+GO
+CREATE TABLE [dbo].[Product] (
+    [Product_ID]     INT            NOT NULL,
+    [SubCategory_ID] INT            NULL,
+    [Product_Name]   NVARCHAR (200) NULL,
+    [Product_Image]  NVARCHAR (50)  NULL,
+    [Series]         NVARCHAR (50)  NULL,
+    [Model]          NVARCHAR (50)  NULL,
+    [Model_Year]     NVARCHAR (50)  NULL,
+    [Series_Info]    NVARCHAR (50)  NULL,
+    PRIMARY KEY CLUSTERED ([Product_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Property]...';
+
+
+GO
+CREATE TABLE [dbo].[Property] (
+    [Property_ID]   INT           NOT NULL,
+    [Property_Name] NVARCHAR (50) NULL,
+    [IsType]        BIT           NULL,
+    [IsTechSpec]    BIT           NULL,
+    PRIMARY KEY CLUSTERED ([Property_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[PropertyValue]...';
+
+
+GO
+CREATE TABLE [dbo].[PropertyValue] (
+    [Property_ID] INT           NOT NULL,
+    [Product_ID]  INT           NOT NULL,
+    [Value]       NVARCHAR (50) NULL,
+    CONSTRAINT [PK_PrpertyValue] PRIMARY KEY NONCLUSTERED ([Property_ID] ASC, [Product_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[SubCategory]...';
+
+
+GO
+CREATE TABLE [dbo].[SubCategory] (
+    [SubCategory_ID]   INT           NOT NULL,
+    [Category_ID]      INT           NULL,
+    [SubCategory_Name] NVARCHAR (50) NULL,
+    PRIMARY KEY CLUSTERED ([SubCategory_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[TechSpecFilter]...';
+
+
+GO
+CREATE TABLE [dbo].[TechSpecFilter] (
+    [Property_ID]    INT          NOT NULL,
+    [SubCategory_ID] INT          NOT NULL,
+    [Min_Value]      DECIMAL (18) NULL,
+    [Max_Value]      DECIMAL (18) NULL,
+    CONSTRAINT [PK_TechSpecFilter] PRIMARY KEY NONCLUSTERED ([Property_ID] ASC, [SubCategory_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[TypeFilter]...';
+
+
+GO
+CREATE TABLE [dbo].[TypeFilter] (
+    [Property_ID]    INT           NOT NULL,
+    [SubCategory_ID] INT           NOT NULL,
+    [Type_Name]      NVARCHAR (50) NULL,
+    [Type_Options]   NVARCHAR (50) NULL,
+    CONSTRAINT [PK_TypeFilter] PRIMARY KEY NONCLUSTERED ([Property_ID] ASC, [SubCategory_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[User]...';
+
+
+GO
+CREATE TABLE [dbo].[User] (
+    [User_ID]       INT           IDENTITY (1, 1) NOT NULL,
+    [User_Name]     NVARCHAR (50) NULL,
+    [User_Email]    NVARCHAR (50) NULL,
+    [User_Image]    NVARCHAR (50) NULL,
+    [User_Password] NVARCHAR (50) NULL,
+    [Credential_ID] INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([User_ID] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[FK_Product_SubCategory]...';
+
+
+GO
+ALTER TABLE [dbo].[Product] WITH NOCHECK
+    ADD CONSTRAINT [FK_Product_SubCategory] FOREIGN KEY ([SubCategory_ID]) REFERENCES [dbo].[SubCategory] ([SubCategory_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_PropertyValue_Property]...';
+
+
+GO
+ALTER TABLE [dbo].[PropertyValue] WITH NOCHECK
+    ADD CONSTRAINT [FK_PropertyValue_Property] FOREIGN KEY ([Property_ID]) REFERENCES [dbo].[Property] ([Property_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_PropertyValue_Product]...';
+
+
+GO
+ALTER TABLE [dbo].[PropertyValue] WITH NOCHECK
+    ADD CONSTRAINT [FK_PropertyValue_Product] FOREIGN KEY ([Product_ID]) REFERENCES [dbo].[Product] ([Product_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_SubCategory_Category]...';
+
+
+GO
+ALTER TABLE [dbo].[SubCategory] WITH NOCHECK
+    ADD CONSTRAINT [FK_SubCategory_Category] FOREIGN KEY ([Category_ID]) REFERENCES [dbo].[Category] ([Category_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_TechSpecFilter_Property]...';
+
+
+GO
+ALTER TABLE [dbo].[TechSpecFilter] WITH NOCHECK
+    ADD CONSTRAINT [FK_TechSpecFilter_Property] FOREIGN KEY ([Property_ID]) REFERENCES [dbo].[Property] ([Property_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_TechSpecFilter_SubCategory]...';
+
+
+GO
+ALTER TABLE [dbo].[TechSpecFilter] WITH NOCHECK
+    ADD CONSTRAINT [FK_TechSpecFilter_SubCategory] FOREIGN KEY ([SubCategory_ID]) REFERENCES [dbo].[SubCategory] ([SubCategory_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_TypeFilter_Property]...';
+
+
+GO
+ALTER TABLE [dbo].[TypeFilter] WITH NOCHECK
+    ADD CONSTRAINT [FK_TypeFilter_Property] FOREIGN KEY ([Property_ID]) REFERENCES [dbo].[Property] ([Property_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_TypeFilter_SubCategory]...';
+
+
+GO
+ALTER TABLE [dbo].[TypeFilter] WITH NOCHECK
+    ADD CONSTRAINT [FK_TypeFilter_SubCategory] FOREIGN KEY ([SubCategory_ID]) REFERENCES [dbo].[SubCategory] ([SubCategory_ID]);
+
+
+GO
+PRINT N'Creating [dbo].[FK_User_Credential]...';
+
+
+GO
+ALTER TABLE [dbo].[User] WITH NOCHECK
+    ADD CONSTRAINT [FK_User_Credential] FOREIGN KEY ([Credential_ID]) REFERENCES [dbo].[Credential] ([Credential_ID]);
 
 
 GO
@@ -314,6 +563,34 @@ WHEN NOT MATCHED BY TARGET THEN
 INSERT (Property_ID , Product_ID, Value)  
 VALUES (Property_ID , Product_ID, Value);
 GO
+
+GO
+PRINT N'Checking existing data against newly created constraints';
+
+
+GO
+USE [$(DatabaseName)];
+
+
+GO
+ALTER TABLE [dbo].[Product] WITH CHECK CHECK CONSTRAINT [FK_Product_SubCategory];
+
+ALTER TABLE [dbo].[PropertyValue] WITH CHECK CHECK CONSTRAINT [FK_PropertyValue_Property];
+
+ALTER TABLE [dbo].[PropertyValue] WITH CHECK CHECK CONSTRAINT [FK_PropertyValue_Product];
+
+ALTER TABLE [dbo].[SubCategory] WITH CHECK CHECK CONSTRAINT [FK_SubCategory_Category];
+
+ALTER TABLE [dbo].[TechSpecFilter] WITH CHECK CHECK CONSTRAINT [FK_TechSpecFilter_Property];
+
+ALTER TABLE [dbo].[TechSpecFilter] WITH CHECK CHECK CONSTRAINT [FK_TechSpecFilter_SubCategory];
+
+ALTER TABLE [dbo].[TypeFilter] WITH CHECK CHECK CONSTRAINT [FK_TypeFilter_Property];
+
+ALTER TABLE [dbo].[TypeFilter] WITH CHECK CHECK CONSTRAINT [FK_TypeFilter_SubCategory];
+
+ALTER TABLE [dbo].[User] WITH CHECK CHECK CONSTRAINT [FK_User_Credential];
+
 
 GO
 PRINT N'Update complete.';
