@@ -78,30 +78,68 @@
     <Content Include="JooleModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>JooleModel.Context.cs</LastGenOutput>
+      <DependentUpon>JooleModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="JooleModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>JooleModel.edmx</DependentUpon>
+      <LastGenOutput>JooleModel.cs</LastGenOutput>
     </Content>
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Category.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Credential.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="JooleModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>JooleModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JooleModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>JooleModel.tt</DependentUpon>
     </Compile>
     <Compile Include="JooleModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>JooleModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Product.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Property.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyValue.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SubCategory.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TechSpecFilter.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TypeFilter.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>JooleModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="JooleModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>JooleModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="JooleModel.edmx.diagram">
+    <Content Include="JooleModel.edmx.diagram">
       <DependentUpon>JooleModel.edmx</DependentUpon>
-    </None>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
