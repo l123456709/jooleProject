@@ -12,9 +12,5 @@ C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\bin\Debu
 C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.dll
 C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\bin\Debug\JooleDatabase.pdb
 C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.sqlprojAssemblyReference.cache
-C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\Model.xml
-C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\refactor.xml
-C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\postdeploy.sql
-C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\predeploy.sql
 C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.dll
 C:\Users\Yinuo Li\source\repos\jooleProject\JooleDatabase\JooleDatabase\obj\Debug\JooleDatabase.pdb
