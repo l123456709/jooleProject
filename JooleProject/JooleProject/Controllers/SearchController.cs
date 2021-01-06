@@ -47,7 +47,7 @@ namespace JooleProject.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(int? categoryId, int? subcategoryId)
+        public ActionResult Search(int? Category_ID, int? SubCategory_ID)
         {
             JooleDAL.JooleDatabaseEntities entities = new JooleDAL.JooleDatabaseEntities();
             CascadingModel model = new CascadingModel();
@@ -56,19 +56,15 @@ namespace JooleProject.Controllers
                 model.Categories.Add(new SelectListItem { Text = category.Category_Name, Value = category.Category_ID.ToString() });
             }
 
-            if (categoryId.HasValue)
+            if (Category_ID.HasValue)
             {
                 var subcategories = (from sub in entities.SubCategories
-                              where sub.Category_ID == categoryId.Value
+                              where sub.Category_ID == Category_ID.Value
                               select sub).ToList();
                 foreach (var subcategory in subcategories)
                 {
                     model.SubCategories.Add(new SelectListItem { Text = subcategory.SubCategory_Name, Value = subcategory.SubCategory_ID.ToString() });
                 }
-
-                ViewBag.t = model;
-
-                return View("View");
 
                 /*if (stateId.HasValue)
                 {
