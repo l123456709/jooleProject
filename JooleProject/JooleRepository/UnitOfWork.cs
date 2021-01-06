@@ -11,11 +11,13 @@ namespace JooleRepository
     {
         DbContext Context;
         public IProductRepo product;
+        /*public IUserRepo user;*/
 
         public UnitOfWork(DbContext context)
         {
             this.Context = context;
             product = new ProductRepo(Context);
+            /*user = new UserRepo(Context);*/
         }
 
         public void SaveChanges()
