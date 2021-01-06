@@ -1,0 +1,91 @@
+﻿@model JooleDAL.Category
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SearchPage</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    @*<script src="~/Scripts/search.js"></script>*@
+</head>
+<body>
+    <div>
+        <form>
+            <select id="Category">
+                <option value="Initial" name="Initial">Category</option>
+                @foreach (var name in (IEnumerable<string>)Session["categoryname"])
+                {
+                    <option value=@name name=@name>@name</option>
+                }
+            </select>
+
+            <select id="SubCategory" name="SubCategory">
+                <option value="" name="">Search...</option>
+                @*@{ if (Session["check"] != null)
+                   {
+                       foreach (var item in (IEnumerable<string>)Session["subcategoryname"])
+                       {
+                           <option value=@item name=@item>@item</option>
+                       }
+                   }
+                }*@
+
+
+            </select>
+            @*@{ if (Session["check"].ToString() != null)
+              {
+                  <p>Success!!!</p>
+              }
+            }*@
+        </form>
+
+        <p>@Session["test"]</p>
+        <p>@ViewBag.test</p>
+        @Html.Partial("PartialSearchPage")
+
+        @*<table>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category_Name)
+                </th>
+            </tr>
+
+            @foreach (var item in ViewBag.category)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item)
+                    </td>
+                </tr>
+            }
+        </table>*@
+    </div>
+</body>
+</html>
+
+<script type="text/javascript">
+    @*get categories from database when loading into search page*@
+    $(document).ready(function () {
+        @*loading category from database*@
+        $("#Category").change(function () {
+            let url = '@Url.Action("SearchPage", "Search")';
+            var name = $(this).val();
+            alert(url);
+            alert(name);
+            $.post(url, {categoryname: name}, function (data, status) {
+                alert(status);
+            });
+        });
+    });
+</script>

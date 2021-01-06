@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="JooleDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Category_ID" />
+    </Key>
+    <Property Name="Category_ID" Type="int" Nullable="false" />
+    <Property Name="Category_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Credential">
+    <Key>
+      <PropertyRef Name="Credential_ID" />
+    </Key>
+    <Property Name="Credential_ID" Type="int" Nullable="false" />
+    <Property Name="User_Type" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Product_ID" Type="int" Nullable="false" />
+    <Property Name="SubCategory_ID" Type="int" />
+    <Property Name="Product_Name" Type="nvarchar" MaxLength="200" />
+    <Property Name="Product_Image" Type="nvarchar" MaxLength="50" />
+    <Property Name="Series" Type="nvarchar" MaxLength="50" />
+    <Property Name="Model" Type="nvarchar" MaxLength="50" />
+    <Property Name="Model_Year" Type="nvarchar" MaxLength="50" />
+    <Property Name="Series_Info" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Property">
+    <Key>
+      <PropertyRef Name="Property_ID" />
+    </Key>
+    <Property Name="Property_ID" Type="int" Nullable="false" />
+    <Property Name="Property_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsType" Type="bit" />
+    <Property Name="IsTechSpec" Type="bit" />
+  </EntityType>
+  <EntityType Name="PropertyValue">
+    <Key>
+      <PropertyRef Name="Property_ID" />
+      <PropertyRef Name="Product_ID" />
+    </Key>
+    <Property Name="Property_ID" Type="int" Nullable="false" />
+    <Property Name="Product_ID" Type="int" Nullable="false" />
+    <Property Name="Value" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="SubCategory">
+    <Key>
+      <PropertyRef Name="SubCategory_ID" />
+    </Key>
+    <Property Name="SubCategory_ID" Type="int" Nullable="false" />
+    <Property Name="Category_ID" Type="int" />
+    <Property Name="SubCategory_Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TechSpecFilter">
+    <Key>
+      <PropertyRef Name="Property_ID" />
+      <PropertyRef Name="SubCategory_ID" />
+    </Key>
+    <Property Name="Property_ID" Type="int" Nullable="false" />
+    <Property Name="SubCategory_ID" Type="int" Nullable="false" />
+    <Property Name="Min_Value" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="Max_Value" Type="decimal" Precision="18" Scale="0" />
+  </EntityType>
+  <EntityType Name="TypeFilter">
+    <Key>
+      <PropertyRef Name="Property_ID" />
+      <PropertyRef Name="SubCategory_ID" />
+    </Key>
+    <Property Name="Property_ID" Type="int" Nullable="false" />
+    <Property Name="SubCategory_ID" Type="int" Nullable="false" />
+    <Property Name="Type_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Type_Options" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="User_ID" />
+    </Key>
+    <Property Name="User_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="User_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="User_Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="User_Image" Type="nvarchar" MaxLength="50" />
+    <Property Name="User_Password" Type="nvarchar" MaxLength="50" />
+    <Property Name="Credential_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Product_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
+    <End Role="Product" Type="Self.Product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="SubCategory_ID" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="SubCategory_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyValue_Product">
+    <End Role="Product" Type="Self.Product" Multiplicity="1" />
+    <End Role="PropertyValue" Type="Self.PropertyValue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Product_ID" />
+      </Principal>
+      <Dependent Role="PropertyValue">
+        <PropertyRef Name="Product_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PropertyValue_Property">
+    <End Role="Property" Type="Self.Property" Multiplicity="1" />
+    <End Role="PropertyValue" Type="Self.PropertyValue" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Property_ID" />
+      </Principal>
+      <Dependent Role="PropertyValue">
+        <PropertyRef Name="Property_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubCategory_Category">
+    <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Category_ID" />
+      </Principal>
+      <Dependent Role="SubCategory">
+        <PropertyRef Name="Category_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TechSpecFilter_Property">
+    <End Role="Property" Type="Self.Property" Multiplicity="1" />
+    <End Role="TechSpecFilter" Type="Self.TechSpecFilter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Property_ID" />
+      </Principal>
+      <Dependent Role="TechSpecFilter">
+        <PropertyRef Name="Property_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TechSpecFilter_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+    <End Role="TechSpecFilter" Type="Self.TechSpecFilter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="SubCategory_ID" />
+      </Principal>
+      <Dependent Role="TechSpecFilter">
+        <PropertyRef Name="SubCategory_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TypeFilter_Property">
+    <End Role="Property" Type="Self.Property" Multiplicity="1" />
+    <End Role="TypeFilter" Type="Self.TypeFilter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Property">
+        <PropertyRef Name="Property_ID" />
+      </Principal>
+      <Dependent Role="TypeFilter">
+        <PropertyRef Name="Property_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TypeFilter_SubCategory">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+    <End Role="TypeFilter" Type="Self.TypeFilter" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="SubCategory_ID" />
+      </Principal>
+      <Dependent Role="TypeFilter">
+        <PropertyRef Name="SubCategory_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Credential">
+    <End Role="Credential" Type="Self.Credential" Multiplicity="1" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Credential">
+        <PropertyRef Name="Credential_ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Credential_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="JooleDatabaseModelStoreContainer">
+    <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Credential" EntityType="Self.Credential" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Property" EntityType="Self.Property" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PropertyValue" EntityType="Self.PropertyValue" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubCategory" EntityType="Self.SubCategory" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TechSpecFilter" EntityType="Self.TechSpecFilter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TypeFilter" EntityType="Self.TypeFilter" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Product_SubCategory" Association="Self.FK_Product_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="Product" EntitySet="Product" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyValue_Product" Association="Self.FK_PropertyValue_Product">
+      <End Role="Product" EntitySet="Product" />
+      <End Role="PropertyValue" EntitySet="PropertyValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PropertyValue_Property" Association="Self.FK_PropertyValue_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="PropertyValue" EntitySet="PropertyValue" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubCategory_Category" Association="Self.FK_SubCategory_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="SubCategory" EntitySet="SubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TechSpecFilter_Property" Association="Self.FK_TechSpecFilter_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="TechSpecFilter" EntitySet="TechSpecFilter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TechSpecFilter_SubCategory" Association="Self.FK_TechSpecFilter_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="TechSpecFilter" EntitySet="TechSpecFilter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TypeFilter_Property" Association="Self.FK_TypeFilter_Property">
+      <End Role="Property" EntitySet="Property" />
+      <End Role="TypeFilter" EntitySet="TypeFilter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TypeFilter_SubCategory" Association="Self.FK_TypeFilter_SubCategory">
+      <End Role="SubCategory" EntitySet="SubCategory" />
+      <End Role="TypeFilter" EntitySet="TypeFilter" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Credential" Association="Self.FK_User_Credential">
+      <End Role="Credential" EntitySet="Credential" />
+      <End Role="User" EntitySet="User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

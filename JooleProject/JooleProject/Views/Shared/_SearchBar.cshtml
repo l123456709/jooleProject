@@ -1,0 +1,32 @@
+﻿@model JooleProject.Models.CascadingModel
+
+@using (Html.BeginForm("_SearchBar", "Search", FormMethod.Post, new { id = "SearchForm"}))
+{
+    @Html.DropDownListFor(m => m.Category_ID, Model.Categories, "Please select", new { onchange = "document.forms[0].submit();" })
+
+    @Html.DropDownListFor(m => m.SubCategory_ID, Model.SubCategories, "Please select", new { disabled = "disabled" })
+    @*
+        @Html.DropDownListFor(m => m.CityId, Model.Cities, "Please select", new { disabled = "disabled" })
+    *@
+
+    <input type="submit" value="Submit" id="submit"/>
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        if ($("#SubCategory_ID option").length > 1) {
+            $("#SubCategory_ID").removeAttr("disabled");
+        }
+
+        @*if ($("#CityId option").length > 1) {
+            $("#CityId").removeAttr("disabled");
+        }*@
+
+        if ($("#Category_ID").val() != "" && $("#SubCategory_ID").val() != "" && $("#CityId").val() != "") {
+            var message = "Category: " + $("#Category_ID option:selected").text();
+            message += "\nSubCategory: " + $("#SubCategory_ID option:selected").text();
+            @*message += "\nCity: " + $("#CityId option:selected").text();*@
+            alert(message);
+        }
+    });
+</script>
