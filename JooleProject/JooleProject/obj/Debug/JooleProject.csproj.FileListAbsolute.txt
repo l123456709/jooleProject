@@ -77,3 +77,16 @@ D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\obj\D
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\obj\Debug\JooleProject.csproj.CopyComplete
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\obj\Debug\JooleProject.dll
 D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\obj\Debug\JooleProject.pdb
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleDAL.dll
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleRepository.dll
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleService.dll
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\EntityFramework.dll
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleDAL.pdb
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleDAL.dll.config
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleRepository.pdb
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleRepository.dll.config
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleService.pdb
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\JooleService.dll.config
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\EntityFramework.xml
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\EntityFramework.SqlServer.dll
+D:\study\icc\itlize\csharp\projects\jooleProject\JooleProject\JooleProject\bin\EntityFramework.SqlServer.xml

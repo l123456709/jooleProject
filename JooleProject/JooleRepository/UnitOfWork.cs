@@ -10,13 +10,23 @@ namespace JooleRepository
     public class UnitOfWork : IDisposable
     {
         DbContext Context;
-        public IProductRepo product;
+        public IProductRepo Product;
+        public ITypeFilterRepo TypeFilter;
+        public ISubCategoryRepo SubCategory;
+        public ITechSpecFilterRepo TechSpecFilter;
+        public IPropertyRepo Property;
+        public ICategoryRepo Category;
         /*public IUserRepo user;*/
 
         public UnitOfWork(DbContext context)
         {
             this.Context = context;
-            product = new ProductRepo(Context);
+            Product = new ProductRepo(Context);
+            TypeFilter = new TypeFilterRepo(Context);
+            SubCategory = new SubCategoryRepo(Context);
+            TechSpecFilter = new TechSpecFilterRepo(Context);
+            Property = new PropertyRepo(Context);
+            Category = new CategoryRepo(Context);
             /*user = new UserRepo(Context);*/
         }
 

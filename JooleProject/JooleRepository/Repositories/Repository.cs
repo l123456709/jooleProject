@@ -23,7 +23,7 @@ namespace JooleRepository.Repositories
         IEnumerable<TEntity> GetAll();
     }
 
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class;
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext Context;
 

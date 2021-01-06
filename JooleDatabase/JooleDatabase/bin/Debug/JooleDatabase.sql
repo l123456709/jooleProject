@@ -125,11 +125,11 @@ USING (VALUES
         (6, 'Product Weight', 0, 1),
 		(7, 'Cleaning Path Width', 0, 1), 
         (8, 'Application', 1, 0),
-		(9, 'Width in', 1, 0),
-        (10, 'Height in', 1, 0),
-		(11, 'Depth in', 1, 0), 
-        (12, 'Application', 0, 1),
-        (13, 'Color', 0, 1),
+		(9, 'Width in', 0, 1),
+        (10, 'Height in', 0, 1),
+		(11, 'Depth in', 0, 1), 
+        (12, 'Application', 1, 0),
+        (13, 'Color', 1, 0),
         (14, 'Weight', 0, 1),
         (15, 'Length', 0, 1),
         (16, 'Height', 0, 1),
@@ -272,14 +272,14 @@ USING (VALUES
         (23, 20, '2019'),
         (23, 21, '2018'),
         (24, 10, 'Yes'),
-        (25, 10, '16/3'),
+        (25, 10, '5.3'),
         (14, 10, '15.2'),
         (15, 10, '4'),
         (26, 10, '110V'),
         (27, 10, '15A'),
         (28, 10, 'NO'),
         (24, 11, 'No'),
-        (25, 11, '16/3'),
+        (25, 11, '15.2'),
         (14, 11, '15.2'),
         (15, 11, '8'),
         (26, 11, '220V'),
@@ -313,6 +313,52 @@ ON Target.Property_ID = Source.Property_ID AND Target.Product_ID = Source.Produc
 WHEN NOT MATCHED BY TARGET THEN 
 INSERT (Property_ID , Product_ID, Value)  
 VALUES (Property_ID , Product_ID, Value);
+
+
+MERGE INTO TypeFilter AS Target 
+USING (VALUES 
+        (4, 1, 'Application', 'Indoor;Outdoor')
+) 
+AS Source (Property_ID, SubCategory_ID, Type_Name, Type_Options) 
+ON Target.Property_ID = Source.Property_ID AND Target.SubCategory_ID = Source.SubCategory_ID
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (Property_ID, SubCategory_ID, Type_Name, Type_Options)  
+VALUES (Property_ID, SubCategory_ID, Type_Name, Type_Options);
+
+
+MERGE INTO TechSpecFilter AS Target 
+USING (VALUES 
+        (1, 1, 4500, 18000), 
+        (2, 1, 10, 25),
+        (3, 1, 10, 15),
+		(5, 2, 40, 45),
+        (6, 2, 5, 15),
+		(7, 2, 10, 13), 
+		(9, 2, 5, 12),
+        (10, 3, 5, 9),
+		(11, 3, 5, 12), 
+        (14, 4, 30, 70),
+        (14, 5, 20, 40),
+        (14, 6, 10, 30),
+        (15, 4, 0, 100),
+        (15, 5, 0, 100),
+        (15, 6, 0, 100),
+        (16, 4, 0, 100),
+        (16, 5, 0, 100),
+        (16, 6, 0, 100),
+        (17, 4, 0, 100),
+        (17, 5, 0, 100),
+        (17, 6, 0, 100),
+        (22, 4, 0, 5),
+        (22, 5, 0, 5),
+        (22, 6, 0, 5),
+        (25, 7, 0, 20)
+) 
+AS Source (Property_ID, SubCategory_ID, Min_Value, Max_Value) 
+ON Target.Property_ID = Source.Property_ID AND Target.SubCategory_ID = Source.SubCategory_ID
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (Property_ID, SubCategory_ID, Min_Value, Max_Value)  
+VALUES (Property_ID, SubCategory_ID, Min_Value, Max_Value);
 GO
 
 GO
