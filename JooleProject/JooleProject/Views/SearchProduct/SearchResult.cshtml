@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "SearchResult";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <style>
+        .collapsible {
+            background: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            outline: none;
+            font-size: 17px;
+        }
+
+            .collapsible:after {
+                content: '\002B';
+                font-weight: bold;
+                float: right;
+                margin-left: 5px;
+            }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+
+        .slider {
+            width: 1px;
+            display: inline;
+            -webkit-appearance: none;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+            .slider:hover {
+                opacity: 1;
+            }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 30%;
+            border-radius: 5px;
+        }
+
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+    </style>
+
+</head>
+
+
+<h3>SearchResult</h3>
+
+<div>
+    <div class="container">
+        <div class="left" style="width: 30%; display:inline-block">
+            <div cless="left-layer" style="border-style: solid; border-width: 1px; padding: 5px">
+                <h4 style="display:inline; margin-left: 10px">Search: </h4>
+                <button style="margin-left: 20px; background-color:cadetblue">Save</button>
+                <button style="margin-left: 20px; background-color:cadetblue">Clear</button>
+            </div>
+            <div style="display: flex;">
+                <div style="display:inline-block; flex-basis: 100%; border-style: solid; border-width: 1px; text-align: center">
+                    <h4>Product</h4>
+                </div>
+                <div style="display:inline-block; flex-basis: 100%; border-style: solid; border-width: 1px; text-align: center">
+                    <h4>Project</h4>
+                </div>
+            </div>
+            <div style="width: 100%">
+                <button class="collapsible" style="width: 100%; cursor: pointer; text-align: left;" :after>Product Type</button>
+                <div class="content">
+                    @{
+                        Dictionary<string, List<string>> typeFilters = ViewBag.typeFilters;
+                        foreach (KeyValuePair<string, List<string>> entry in typeFilters)
+                        {
+                            <div style="border-style: solid; border-width: 1px; padding: 5px; text-align: center;">
+                                <P4>@entry.Key:&nbsp;</P4>
+                                @foreach (string value in entry.Value)
+                                {
+                                    <label for=@value>@value</label>
+                                    <input type="checkbox" id=@value />
+                                }
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+            <div style="border-style: solid; border-width: 1px; padding: 5px">
+                <h4 style="display:inline">Model Year:&nbsp;&nbsp;</h4>
+                <input type="number" style="display:inline; width: 70px" />
+                <h4 style="display:inline">&nbsp;&nbsp;-&nbsp;&nbsp;</h4>
+                <input type="number" style="display:inline; width: 70px" />
+            </div>
+            <div style="width: 100%">
+                <button class="collapsible" style="width: 100%; cursor: pointer; text-align: left;" :after>Technical Specifications</button>
+                <div class="content">
+                    @{
+                        Dictionary<string, List<decimal?>> techSpecFilter = ViewBag.techSpecFilter;
+                        foreach (KeyValuePair<string, List<decimal?>> entry in techSpecFilter)
+                        {
+                            <div style="border-style: solid; border-width: 1px; padding-left: 10px">
+                                <h5>@entry.Key</h5>
+                                <p style="display:inline-block">@entry.Value[0]</p>
+                                <input type="range" min=@entry.Value[0] max=@entry.Value[1] class="slider" style="display:inline; width: 200px" />
+                                <p style="display:inline-block">@entry.Value[1]</p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="right" style="margin-left: 5px; display:inline-block; vertical-align: top; width: 65%">
+            <div class="right-header">
+                <p><b>@ViewBag.categoryName</b> > @ViewBag.subCategory </p>
+            </div>
+            <div>
+                @{
+                    foreach (var item in ViewBag.products)
+                    {
+                        <div class="card" style="display: inline-block; margin-top: 10px; vertical-align:top">
+                            <img src="@Url.Content(item.Product_Image)" alt="Avatar" style="width: 100%; border-radius: 5px 5px 0 0;">
+                            <div style="padding: 2px 16px;">
+                                <h4>@item.Product_Name</h4>
+                                <h5>@item.Series</h5>
+                                <h5>@item.Model</h5>
+                                <h5>@item.Model_Year</h5>
+                                <h5>@item.Series_Info</h5>
+                                <input type="checkbox" class="product-checkbox" id=@item.Product_ID checked>
+                                <label for=@item.Product_ID>Compare</label>
+                                <br />
+                                @Html.ActionLink("Product Summmary", "Summmary", "SearchProduct", new { productId = item.Product_ID }, new { target = "_blank" })
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+            <div>
+                <button type="submit" id="cmpbtn" style="margin-top: 10px;">Compare</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        });
+    }
+
+    $("#cmpbtn").click(function () {
+        var productsID = [];
+        var checkboxs = document.getElementsByClassName("product-checkbox");
+
+        for (let i = 0; i < checkboxs.length; i++) {
+            if (checkboxs[i].checked) {
+                productsID.push(checkboxs[i].id);
+            }
+        }
+
+        console.log(productsID);
+        $.post("@Url.Action("Compare", "SearchProduct")",
+            {
+                productsId: productsID
+            },
+
+            function (page, status) {
+@*                $("body").html(page);*@
+                var w = window.open('about:blank');
+                w.document.open();
+                w.document.write(page);
+                w.document.close();
+            }
+        );
+    })
+</script>

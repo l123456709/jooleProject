@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<head>
+    <style>
+        table, td, th {
+            border: 1px solid black;
+            padding-left: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+
+<div>
+    @Html.ActionLink("Product Summary", "Detail", "SearchProduct")
+    @Html.ActionLink("Product Details", "Detail", "SearchProduct")
+    @Html.ActionLink("Product Documentation", "Detail", "SearchProduct")
+    @Html.ActionLink("Contact", "Detail", "SearchProduct")
+</div>
+
+<h2>Product Summary</h2>
+<div>
+    <div class="left" style="display: inline-block; width: 45%">
+        <div class="description-table">
+            <table>
+                <p>DESCRIPTION</p>
+                @{
+                    foreach (KeyValuePair<string, string> entry in @ViewBag.productDetails["DESCRIPTION"])
+                    {
+                        if (entry.Key != "Product Image")
+                        {
+                            <tr>
+                                <td>@entry.Key</td>
+                                <td>@entry.Value</td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+        </div>
+        <div class="type-table">
+            <table>
+                <p>TYPE</p>
+                @{
+                    foreach (KeyValuePair<string, string> entry in @ViewBag.productDetails["TYPE"])
+                    {
+                        <tr>
+                            <td>@entry.Key</td>
+                            <td>@entry.Value</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+    <div class="right" style="display: inline-block; vertical-align: top; width: 45%">
+        <div class="tech-sepc-table">
+            <table>
+                <p>TECHNICAL SPECIFICATIONS</p>
+                @{
+                    foreach (KeyValuePair<string, string> entry in @ViewBag.productDetails["TECHNICAL SPECIFICATIONS"])
+                    {
+                        <tr>
+                            <td>@entry.Key</td>
+                            <td>@entry.Value</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+
+</div>
