@@ -16,6 +16,7 @@ namespace JooleRepository
         public ITechSpecFilterRepo TechSpecFilter;
         public IPropertyRepo Property;
         public ICategoryRepo Category;
+        public IPropertyValueRepo PropertyValue;
         /*public IUserRepo user;*/
 
         public UnitOfWork(DbContext context)
@@ -26,6 +27,7 @@ namespace JooleRepository
             SubCategory = new SubCategoryRepo(Context);
             TechSpecFilter = new TechSpecFilterRepo(Context);
             Property = new PropertyRepo(Context);
+            PropertyValue = new PropertyValueRepo(Context);
             Category = new CategoryRepo(Context);
             /*user = new UserRepo(Context);*/
         }

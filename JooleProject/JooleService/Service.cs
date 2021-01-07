@@ -110,5 +110,43 @@ namespace JooleService
             }
             return res;
         }
+
+        public Dictionary<string, Dictionary<string, string>> GetDetailsByProductId(int productId)
+        {
+            Dictionary<string, Dictionary<string, string>> res = new Dictionary<string, Dictionary<string, string>>();
+            var product = uow.Product.GetByID(productId);
+
+            Dictionary<string, string> productDescription = new Dictionary<string, string>();
+            productDescription.Add("Product Image", product.Product_Image);
+            productDescription.Add("Product Name", product.Product_Name);
+            productDescription.Add("Series", product.Series);
+            productDescription.Add("Model", product.Model);
+            productDescription.Add("Model Year", product.Model_Year);
+            productDescription.Add("Series Info", product.Series_Info);
+            res.Add("DESCRIPTION", productDescription);
+
+            Dictionary<string, string> productType = new Dictionary<string, string>();
+            Dictionary<string, string> productTechSpec = new Dictionary<string, string>();
+            var propertyValues = uow.PropertyValue.GetAll();
+            foreach (var item in propertyValues)
+            {
+                if (item.Product_ID == productId)
+                {
+                    if (item.Property.IsType.Value)
+                    {
+                        productType.Add(item.Property.Property_Name, item.Value);
+                    }
+                    if (item.Property.IsTechSpec.Value)
+                    {
+                        productTechSpec.Add(item.Property.Property_Name, item.Value);
+                    }
+                }
+            }
+
+            res.Add("TYPE", productType);
+            res.Add("TECHNICAL SPECIFICATIONS", productTechSpec);
+
+            return res;
+        }
     }
 }

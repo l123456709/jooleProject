@@ -10,6 +10,30 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
+MERGE INTO Credential AS Target 
+USING (VALUES 
+        (1, 'Administrator'),
+        (2, 'Normal User')
+) 
+AS Source (Credential_ID, User_Type) 
+ON Target.Credential_ID = Source.Credential_ID 
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (Credential_ID, User_Type)
+VALUES (Credential_ID, User_Type);
+
+
+MERGE INTO [dbo].[User] AS Target
+USING (VALUES 
+        (1, 'Jvicini', 'Jvicini@joole.com', 'image', '501', 1),
+        (2, 'Hapnitz', 'Hapnitz@joole.com', 'image', '502', 2),
+        (3, 'Mestornell', 'Mestornell@joole.com', 'image', '503', 2)
+) 
+AS Source (User_ID, User_Name, User_Email, User_Image, User_Password, Credential_ID) 
+ON Target.User_ID = Source.User_ID 
+WHEN NOT MATCHED BY TARGET THEN
+INSERT (User_Name, User_Email, User_Image, User_Password, Credential_ID) 
+VALUES (User_Name, User_Email, User_Image, User_Password, Credential_ID);
+
 
 MERGE INTO Category AS Target 
 USING (VALUES 

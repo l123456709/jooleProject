@@ -128,27 +128,49 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SearchProductController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\CascadingModel.cs" />
     <Compile Include="Models\TypeFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ProductsComparasion.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\JooleStyles\SearchBar.css" />
     <Content Include="Content\JooleStyles\SearchResult.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Images\Fans1.jfif" />
+    <Content Include="Images\product19.jpg" />
+    <Content Include="Images\product18.jpg" />
+    <Content Include="Images\product17.jpg" />
+    <Content Include="Images\product16.jpg" />
+    <Content Include="Images\product21.jpg" />
+    <Content Include="Images\product20.jpg" />
     <Content Include="Images\jooleLogo.png" />
+    <Content Include="Images\product1.jpg" />
+    <Content Include="Images\product10.jpg" />
+    <Content Include="Images\product11.jpg" />
+    <Content Include="Images\product2.jpg" />
+    <Content Include="Images\product3.jpg" />
+    <Content Include="Images\product4.jpg" />
+    <Content Include="Images\product5.jpg" />
+    <Content Include="Images\product6.jpg" />
+    <Content Include="Images\product7.JPG" />
+    <Content Include="Images\product8.JPG" />
+    <Content Include="Images\product9.JPG" />
+    <Content Include="Images\project12.jpg" />
+    <Content Include="Images\project13.jpg" />
+    <Content Include="Images\project14.jpg" />
+    <Content Include="Images\project15.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -177,10 +199,16 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\SearchProduct\SearchResult.cshtml" />
+    <Content Include="Views\SearchProduct\Summmary.cshtml" />
+    <Content Include="Views\SearchProduct\Compare.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Shared\_SearchBar.cshtml" />
+    <Content Include="Views\Shared\_SearchBarPartial.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Product\" />
+    <Folder Include="Views\Default\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

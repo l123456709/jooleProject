@@ -1,41 +1,38 @@
-﻿@model JooleProject.Models.Product
-
-
-@{
+﻿@{
     ViewBag.Title = "SearchResult";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
     <style>
         .collapsible {
-          background: none;
-          cursor: pointer;
-          width: 100%;
-          text-align: left;
-          outline: none;
-          font-size: 17px;
+            background: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: left;
+            outline: none;
+            font-size: 17px;
         }
 
-        .collapsible:after {
-          content: '\002B';
-          font-weight: bold;
-          float: right;
-          margin-left: 5px;
-        }
+            .collapsible:after {
+                content: '\002B';
+                font-weight: bold;
+                float: right;
+                margin-left: 5px;
+            }
 
         .active:after {
-          content: "\2212";
+            content: "\2212";
         }
 
         .content {
-          max-height: 0;
-          overflow: hidden;
-          transition: max-height 0.2s ease-out;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
         }
 
         .slider {
             width: 1px;
-            display:inline;
+            display: inline;
             -webkit-appearance: none;
             border-radius: 5px;
             background: #d3d3d3;
@@ -45,9 +42,9 @@
             transition: opacity .2s;
         }
 
-        .slider:hover {
-            opacity: 1;
-        }
+            .slider:hover {
+                opacity: 1;
+            }
 
         .card {
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -56,10 +53,10 @@
             border-radius: 5px;
         }
 
-        .card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-        }
-</style>
+            .card:hover {
+                box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            }
+    </style>
 
 </head>
 
@@ -79,7 +76,7 @@
                     <h4>Product</h4>
                 </div>
                 <div style="display:inline-block; flex-basis: 100%; border-style: solid; border-width: 1px; text-align: center">
-                    <h4>Product</h4>
+                    <h4>Project</h4>
                 </div>
             </div>
             <div style="width: 100%">
@@ -132,8 +129,8 @@
             <div>
                 @{
                     foreach (var item in ViewBag.products)
-                    {   
-                        <div class="card" style="display: inline-block; margin-top: 10px">
+                    {
+                        <div class="card" style="display: inline-block; margin-top: 10px; vertical-align:top">
                             <img src="@Url.Content(item.Product_Image)" alt="Avatar" style="width: 100%; border-radius: 5px 5px 0 0;">
                             <div style="padding: 2px 16px;">
                                 <h4>@item.Product_Name</h4>
@@ -141,14 +138,23 @@
                                 <h5>@item.Model</h5>
                                 <h5>@item.Model_Year</h5>
                                 <h5>@item.Series_Info</h5>
+                                <input type="checkbox" class="product-checkbox" id=@item.Product_ID checked>
+                                <label for=@item.Product_ID>Compare</label>
+                                <br />
+                                @Html.ActionLink("Product Summmary", "Summmary", "SearchProduct", new { productId = item.Product_ID }, new { target = "_blank" })
                             </div>
                         </div>
                     }
                 }
             </div>
+            <div>
+                <button type="submit" id="cmpbtn" style="margin-top: 10px;">Compare</button>
+            </div>
         </div>
     </div>
 </div>
+
+@Scripts.Render("~/bundles/jquery")
 
 <script>
     var coll = document.getElementsByClassName("collapsible");
@@ -165,4 +171,30 @@
             }
         });
     }
+
+    $("#cmpbtn").click(function () {
+        var productsID = [];
+        var checkboxs = document.getElementsByClassName("product-checkbox");
+
+        for (let i = 0; i < checkboxs.length; i++) {
+            if (checkboxs[i].checked) {
+                productsID.push(checkboxs[i].id);
+            }
+        }
+
+        console.log(productsID);
+        $.post("@Url.Action("Compare", "SearchProduct")",
+            {
+                productsId: productsID
+            },
+
+            function (page, status) {
+@*                $("body").html(page);*@
+                var w = window.open('about:blank');
+                w.document.open();
+                w.document.write(page);
+                w.document.close();
+            }
+        );
+    })
 </script>
