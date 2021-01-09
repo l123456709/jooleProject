@@ -12,6 +12,11 @@ namespace JooleProject.Controllers
 {
     public class SearchProductController : Controller
     {
+
+        public ActionResult Test()
+        {
+            return View();
+        }
         // GET: SearchProduct
 
         public ActionResult SearchResult(string subCategory = "Fans")
@@ -66,6 +71,15 @@ namespace JooleProject.Controllers
             }
 
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult Filter(List<int> fltVal, string subCategory)
+        {
+            Service service = new Service();
+            ViewBag.products = service.GetProductsByTechSpecFilter(fltVal, subCategory);
+
+            return PartialView();
         }
 
         public ActionResult _Search()

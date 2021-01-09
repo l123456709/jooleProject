@@ -73,7 +73,7 @@ namespace JooleService
             }
             return res;
         }
-
+/*
 
         public boolean LoginValidation(string username, string password)
         {
@@ -88,7 +88,7 @@ namespace JooleService
             }
 
             return false;
-        }
+        }*/
 
         public string GetCategoryBySubCategory(string subCategory)
         {
@@ -162,6 +162,59 @@ namespace JooleService
             res.Add("TYPE", productType);
             res.Add("TECHNICAL SPECIFICATIONS", productTechSpec);
 
+            return res;
+        }
+
+        public List<Product> GetProductsByTechSpecFilter(List<int> fltVal, string subCategory)
+        {
+            List<Product> res = new List<Product>();
+            var products = uow.Product.GetAll();
+            var properties = uow.TechSpecFilter.GetAll();
+            List<int> allPropertyId = new List<int>();
+            int length = fltVal.Count() / 2;
+            
+            /*            foreach (var item in properties)
+                        {
+                            if (item.SubCategory.SubCategory_Name == subCategory)
+                            {
+                                allPropertyId.Add(item.Property_ID);
+                            }
+                        }
+            */
+            foreach (var item in products)
+            {
+
+                if (item.SubCategory.SubCategory_Name == subCategory)
+                {
+                    bool flag = true;
+                    int i = 0;
+                    foreach (var pVal in item.PropertyValues)
+                    {   
+                        if (i >= length)
+                        {
+                            break;
+                        }
+
+                        if (pVal.Property.IsTechSpec == true)
+                        {
+                            int x = Int32.Parse(pVal.Value);
+                            int a = i * 2;
+                            int min = fltVal[a];
+                            int max = fltVal[a + 1];
+                            if (x > max || x < min)
+                            {
+                                flag = false;
+                            }
+                            i++;
+                        }
+                        
+                    }
+                    if (flag == true)
+                    {
+                        res.Add(item);
+                    }
+                }
+            }
             return res;
         }
     }

@@ -279,26 +279,18 @@
 
         @*Sign up form here*@
         <!-- Modal content -->
-        <form class="modal-content">
-            @*<div class="container">*@
-            @*The <span> tag is much like the <div> element, but <div> is a block-level element and <span> is an inline element.*@
-            @*<div class="close_container">*@
+        @using (Html.BeginForm("Signup", "Login", FormMethod.Post, new { @class = "modal-content"}))
+        {
             <span class="close" id="circle">&times;</span>
-            @*</div>*@
-
             <h2 style="font-size: 22px; font-weight: normal">Register as User</h2>
             <hr>
-
             <table>
-                @*image here*@
                 <tr>
                     <td></td>
                     <td><label for="avatar" class="imageelement"><b>Image Preview</b></label></td>
                 </tr>
-
                 <tr>
                     <td></td>
-                    @*<td><input type="image" id="output_image" alt="image" class="imageelement"></td>*@
                     <td><img id="output_image" class="imageelement"></td>
                 </tr>
 
@@ -314,28 +306,35 @@
 
                 <tr>
                     <td><label for="name"><b>UserName:</b></label></td>
-                    <td><input type="text" placeholder="User Name" class="field" required></td>
+                    <td>
+                        @Html.TextBoxFor(model => model.User_Name)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><label for="credential"><b>Credential ID:</b></label></td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Credential_ID)
+                    </td>
                 </tr>
 
                 <tr>
                     <td><label for="email"><b>Email Address:</b></label></td>
-                    <td><input type="Email" placeholder="Email Id" class="field" required></td>
+                    <td>
+                        @Html.TextBoxFor(model => model.User_Email)
+                    </td>
                 </tr>
 
                 <tr>
                     <td><label for="password"><b>Password:</b></label></td>
-                    <td><input type="password" placeholder="Password" class="field" required></td>
-                </tr>
-
-                <tr>
-                    <td><label for="password"><b>Confirm Password:</b></label></td>
-                    <td><input type="password" placeholder="Password" class="field" required></td>
+                    <td>
+                        @Html.PasswordFor(model => model.User_Password)
+                    </td>
                 </tr>
             </table>
             <hr>
             <input class="signupbutton" type="submit" value="Sign up" />
-            @*</div>*@
-        </form>
+        }
 
     </div>
 

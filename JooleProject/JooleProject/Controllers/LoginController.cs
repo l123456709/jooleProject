@@ -39,8 +39,24 @@ namespace JooleProject.Controllers
             }
         }
 
-        public ActionResult Signup()
+        [HttpPost]
+        public ActionResult Signup(JooleDAL.User obj)
         {
+            using (var databaseContext = new JooleDAL.JooleDatabaseEntities())
+            {
+                JooleDAL.User user = new JooleDAL.User
+                {
+                    User_Name = obj.User_Name,
+                    User_Password = obj.User_Password,
+                    User_Email = obj.User_Email,
+                    Credential_ID = obj.Credential_ID,
+                };
+
+                databaseContext.Users.Add(user);
+                databaseContext.SaveChanges();
+            }
+
+            ViewBag.Message = "User Details Saved";
             return View("Login");
         }
     }

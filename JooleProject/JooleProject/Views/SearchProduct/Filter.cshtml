@@ -1,0 +1,22 @@
+﻿<div>
+    @{
+        foreach (var item in ViewBag.products)
+        {
+            <div class="card" style="display: inline-block; margin-top: 10px; vertical-align:top">
+                <img src="@Url.Content(item.Product_Image)" alt="Avatar" style="width: 100%; border-radius: 5px 5px 0 0;">
+                <div style="padding: 2px 16px;">
+                    <h4>@item.Product_Name</h4>
+                    <h5>@item.Series</h5>
+                    <h5>@item.Model</h5>
+                    <h5>@item.Model_Year</h5>
+                    <h5>@item.Series_Info</h5>
+                    <input type="checkbox" class="product-checkbox" id=@item.Product_ID checked>
+                    <label for=@item.Product_ID>Compare</label>
+                    <br />
+                    @Html.ActionLink("Product Summmary", "Summmary", "SearchProduct", new { productId = item.Product_ID }, new { target = "_blank" })
+                </div>
+            </div>
+        }
+    }
+
+</div>
