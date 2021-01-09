@@ -3,6 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <style>
         .collapsible {
             background: none;
@@ -96,6 +97,7 @@
                             </div>
                         }
                     }
+                    
                 </div>
             </div>
             <div style="border-style: solid; border-width: 1px; padding: 5px">
@@ -109,16 +111,27 @@
                 <div class="content">
                     @{
                         Dictionary<string, List<decimal?>> techSpecFilter = ViewBag.techSpecFilter;
+                        int a = 0;
                         foreach (KeyValuePair<string, List<decimal?>> entry in techSpecFilter)
                         {
                             <div style="border-style: solid; border-width: 1px; padding-left: 10px">
                                 <h5>@entry.Key</h5>
-                                <p style="display:inline-block">@entry.Value[0]</p>
-                                <input type="range" min=@entry.Value[0] max=@entry.Value[1] class="slider" style="display:inline; width: 200px" />
-                                <p style="display:inline-block">@entry.Value[1]</p>
+                                @*<p style="display:inline-block">@entry.Value[0]</p>
+                                    <input type="range" min=@entry.Value[0] max=@entry.Value[1] class="slider" style="display:inline; width: 200px" />
+                                    <p style="display:inline-block">@entry.Value[1]</p>*@
+                            <div style="margin: 10px">
+                                <input type="number" class="sliderValue" data-index=@a value=@entry.Value[0] style="display: inline-block; width: 20%" min="@entry.Value[0]" max="@entry.Value[1]"/>
+                                @{a++;}
+                                <div id="slider" style="display: inline-block; width: 50%; margin-left:10px; margin-right:10px"></div>
+                                <input type="number" class="sliderValue" data-index=@a value=@entry.Value[1] style="display: inline-block; width: 20%" min="@entry.Value[0]" max="@entry.Value[1]"/>
+                                @{a++;}
+                            </div>
                             </div>
                         }
                     }
+                    <div>
+                        <button type="submit" id="fltbtn" style="margin-top: 10px;">Filter</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -126,7 +139,7 @@
             <div class="right-header">
                 <p><b>@ViewBag.categoryName</b> > @ViewBag.subCategory </p>
             </div>
-            <div>
+            <div class="right-products">
                 @{
                     foreach (var item in ViewBag.products)
                     {
@@ -150,6 +163,7 @@
             <div>
                 <button type="submit" id="cmpbtn" style="margin-top: 10px;">Compare</button>
             </div>
+
         </div>
     </div>
 </div>
@@ -178,7 +192,7 @@
 
         for (let i = 0; i < checkboxs.length; i++) {
             if (checkboxs[i].checked) {
-                productsID.push(checkboxs[i].id);
+                productsID.push(checkboxs[i].val);
             }
         }
 
@@ -197,4 +211,68 @@
             }
         );
     })
+
+    $(document).ready(function () {
+        $("div#slider").each(function (index, element) {
+            var a1 = index * 2;
+            var a2 = index * 2 + 1;
+            var minVal = $("input.sliderValue[data-index=" + a1 + "]").val() - 1;
+            var maxVal = $("input.sliderValue[data-index=" + a2 + "]").val() - (-1);
+            var minRange = minVal++;
+            var maxRange = maxVal--;
+            $(element).slider({
+                min: minVal,
+                max: maxVal,
+                step: 1,
+                values: [minRange, maxRange],
+                range: true,
+                slide: function (event, ui) {
+                    for (let i = 0; i < ui.values.length; i++) {
+                        var b = i + index*2;
+                        $("input.sliderValue[data-index=" + b + "]").val(ui.values[i]);
+                    }
+                }
+            });
+
+            $("input.sliderValue[data-index=" + a1 + "]").change(function () {
+                console.log(("input.sliderValue[data-index=" + a1 + "]"));
+                var $this = $(this);
+                $(element).slider("values", 0, $this.val());
+            });
+
+            $("input.sliderValue[data-index=" + a2 + "]").change(function () {
+                console.log(("input.sliderValue[data-index=" + a1 + "]"));
+                var $this = $(this);
+                $(element).slider("values", 1, $this.val());
+            });
+        });
+    });
+
+    var dive = $(".right-products");
+
+    console.log(dive);
+
+    $("#fltbtn").click(function () {
+        var fltVal = [];
+        var filInputs = document.getElementsByClassName("sliderValue");
+        var subCategory = "@ViewBag.subCategory";
+
+        for (let i = 0; i < filInputs.length; i++) {
+            fltVal.push(filInputs[i].value);
+        }
+
+        console.log(fltVal);
+
+        $.post("@Url.Action("Filter", "SearchProduct")",
+            {
+                fltVal: fltVal,
+                subCategory: subCategory
+            },
+
+            function (page, status) {
+                $(".right-products").html(page);
+            }
+        );
+    })
+
 </script>

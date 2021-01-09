@@ -1,4 +1,5 @@
-﻿@model JooleProject.Models.CascadingModel
+﻿@model IEnumerable<JooleDAL.Category>
+@using JooleDAL
 
 <!DOCTYPE html>
 <html>
@@ -6,39 +7,38 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Joole Company</title>
+
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Styles.Render("~/Content/SearchResult")
+
     <link rel="stylesheet" href="~/Content/JooleStyles/SearchBar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
     <div class="search-header" style="background-image: linear-gradient(to bottom, steelblue, white);">
         <div class="search-header-logo" style="display:inline-block; width: 33%;">
             <img style="width: 50%; padding-left: 50px" src="@Url.Content("~/Images/jooleLogo.png")" />
         </div>
-        @*        <div class="search-header-searchbar" style="display:inline-block; width: 33%; text-align: center;">
-                <select name="cars" id="cars">
-                    <option value="volvo">Volvo</option>
-                    <option value="saab">Saab</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="audi">Audi</option>
+
+
+        <div class="search-header-searchbar" style="display:inline-block; width: 33%; text-align: center;">
+@*
+            <div class="search-container">
+                <select class="category-list">
+                    <option value="">Category</option>
                 </select>
+                <select class="subcategory-list">
+                    <option value="">Search...</option>
+                </select>
+
+                <button type="submit" class="submitbutton"><i class="fa fa-search"></i></button>
             </div>*@
 
-    <div class="search-header-searchbar" style="display:inline-block; width: 33%; text-align: center;">
+            @Html.Partial("_SearchBar")
 
-        <div class="search-container">
-            <select class="category-list">
-                <option value="">Category</option>
-            </select>
-            <select class="subcategory-list">
-                <option value="">Search...</option>
-            </select>
-
-            <button type="submit" class="submitbutton"><i class="fa fa-search"></i></button>
         </div>
-    </div>
 
         <div class="search-header-logo" style="display:inline-block; width: 33%; text-align:right; padding-right: 50px;">
             <img id="output_image" class="imageelement" style="border: none; background-color: grey; border-radius: 50%; max-width: 180px; max-height: 180px; width: 60px; height: 60px;">

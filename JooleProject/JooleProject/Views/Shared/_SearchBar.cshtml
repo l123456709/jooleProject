@@ -1,47 +1,78 @@
-﻿@model JooleProject.Models.CascadingModel
+﻿@model IEnumerable<JooleDAL.Category>
+@using JooleDAL
 
 <link rel="stylesheet" href="~/Content/JooleStyles/SearchBar.css">
 
-@using (Html.BeginForm("_Search", "Search", FormMethod.Post, new { id = "SearchForm" }))
-{
+@*<div id="searchBar" class="container">*@
+<form id="SearchForm">
     <div class="search-container">
-        @Html.DropDownListFor(m => m.Category_ID, Model.Categories, "Category", new { @class = "category-list" })
+        <select id="Category_ID" class="category-list">
+            <option value="" selected hidden>Category</option>
+            @foreach (Category category in Model)
+            {
+                <option value="@category.Category_ID">@category.Category_Name</option>
+            }
+        </select>
 
-        @Html.DropDownListFor(m => m.SubCategory_ID, Model.SubCategories, "Search...", new { @class = "subcategory-list" })
-        @*
-            @Html.DropDownListFor(m => m.CityId, Model.Cities, "Please select", new { disabled = "disabled" })
-        *@
+        <select id="SubCategory_ID" class="subcategory-list">
+            <option value="" selected hidden>Search...</option>
+        </select>
 
-        <button type="submit" class="submitbutton"><i class="fa fa-search"></i></button>
+        <button type="reset" id="search-btn" class="submitbutton"><i class="fa fa-search"></i></button>
     </div>
-}
+</form>
+@*</div>*@
 
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
         $(document).ready(function () {
             $("#Category_ID").change(function () {
-                this.form.submit();
+                // get subcategory name
+                let categoryid = $(this).val();
+                console.log(categoryid);
+                $.get("@Url.Action("GetSubCategoryName", "Search")", { categoryid: categoryid }, function (data, response) {
+                    console.log(data);
+                    let res = data.split(",");
+                    console.log(res);
+                    $("#SubCategory_ID").html("");
+                    for (let i = 0; i < res.length; i++) {
+                        $("#SubCategory_ID").append("<option>" + res[i] + "</option>");
+                    }
+                });
+
+                let page = '@Session["page"]';
+                @*alert(page);*@
+                @*alert("Search");*@
             });
 
-            if ($("#SubCategory_ID option").length > 1)
-            {
-                $("#SubCategory_ID").removeAttr("disabled");
-            }
 
-            @*if ($("#CityId option").length > 1) {
-                $("#CityId").removeAttr("disabled");
-            }*@
 
-            if ($("#Category_ID").val() != "" && $("#SubCategory_ID").val() != "" && $("#CityId").val() != "")
-            {
-                var message = "Category: " + $("#Category_ID option:selected").text();
-                message += "\nSubCategory: " + $("#SubCategory_ID option:selected").text();
-                @* message += "\nCity: " + $("#CityId option:selected").text();*@
-                var subcategoryname = $("#SubCategory_ID option:selected").text();
-                var url = "/SearchProduct/SearchResult?subCategory=" + subcategoryname;
+            @*let subcategoryname = $("#SubCategory_ID option:selected").text();
+            console.log("subcategorynme: " + subcategoryname);*@
+        });
 
-@*                alert(message);*@
+        $("#search-btn").click(function () {
+
+            let subcategoryname = $("#SubCategory_ID option:selected").text();
+            @*console.log("subcategorynme: " + subcategoryname);*@
+
+            @*$.post("@Url.Action("SearchResult","SearchProduct")", { subCategory: subcategoryname });*@
+            if (subcategoryname != "Search...") {
+                let page = '@Session["page"]';
+                @*if (page != "Search") {
+                    let url = "/SearchProduct/SearchResult?subCategory=" + subcategoryname;
+
+                    window.location.href = url;
+                } else {
+                    let url = "/SearchProduct/SearchResult?subCategory=" + subcategoryname;
+                    window.location.href = url;
+                }*@
+
+                let url = "/SearchProduct/SearchResult?subCategory=" + subcategoryname;
                 window.location.href = url;
+            } else {
+                alert("Pleash Select a Subcategory!!");
             }
+
         });
 </script>

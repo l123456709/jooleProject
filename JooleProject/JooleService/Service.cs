@@ -73,6 +73,22 @@ namespace JooleService
             }
             return res;
         }
+/*
+
+        public boolean LoginValidation(string username, string password)
+        {
+            var allusers = uow.User.GetAll();
+
+            foreach (var item in allusers)
+            {
+                if (item.name == username && item.password == password)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }*/
 
         public string GetCategoryBySubCategory(string subCategory)
         {
@@ -145,6 +161,80 @@ namespace JooleService
 
             res.Add("TYPE", productType);
             res.Add("TECHNICAL SPECIFICATIONS", productTechSpec);
+
+            return res;
+        }
+
+        public List<Product> GetProductsByTechSpecFilter(List<int> fltVal, string subCategory)
+        {
+            List<Product> res = new List<Product>();
+            var products = uow.Product.GetAll();
+            var properties = uow.TechSpecFilter.GetAll();
+            List<int> allPropertyId = new List<int>();
+            int length = fltVal.Count() / 2;
+
+            foreach (var item in products)
+            {
+
+                if (item.SubCategory.SubCategory_Name == subCategory)
+                {
+                    bool flag = true;
+                    int i = 0;
+                    foreach (var pVal in item.PropertyValues)
+                    {   
+                        if (i >= length)
+                        {
+                            break;
+                        }
+
+                        if (pVal.Property.IsTechSpec == true)
+                        {
+                            int x = Int32.Parse(pVal.Value);
+                            int a = i * 2;
+                            int min = fltVal[a];
+                            int max = fltVal[a + 1];
+                            if (x > max || x < min)
+                            {
+                                flag = false;
+                            }
+                            i++;
+                        }
+                        
+                    }
+                    if (flag == true)
+                    {
+                        res.Add(item);
+                    }
+                }
+            }
+            return res;
+        }
+
+        // Get all category
+        public List<Category> GetAllCategory()
+        {
+            List<Category> res = new List<Category>();
+            var categories = uow.Category.GetAll();
+            foreach (var item in categories)
+            {
+                res.Add(item);
+            }
+
+            return res;
+        }
+
+        // Get all subcategories by category id
+        public List<SubCategory> GetAllSubcategoryByCategoryID(int categoryid)
+        {
+            List<SubCategory> res = new List<SubCategory>();
+            var subcategories = uow.SubCategory.GetAll();
+            foreach (var item in subcategories)
+            {
+                if (item.Category_ID == categoryid)
+                {
+                    res.Add(item);
+                }
+            }
 
             return res;
         }
