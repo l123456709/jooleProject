@@ -5,85 +5,36 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.SessionState;
 using JooleProject.Models;
+using JooleService;
+using JooleDAL;
 
 namespace JooleProject.Controllers
 {
     public class SearchController : Controller
     {
-/*        // GET: Search
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // pass category data to SearchPage view
-        public ActionResult SearchPageInitial()
-        {
-            JooleDAL.JooleDatabaseEntities db = new JooleDAL.JooleDatabaseEntities();
-
-            var obj = db.Categories;
-            var categoryname = (from s in db.Categories
-                                select s.Category_Name);
-            Session["categoryname"] = categoryname;
-
-            return View("SearchPage");
-        }*/
-
         public ActionResult Search()
         {
-            JooleDAL.JooleDatabaseEntities entities = new JooleDAL.JooleDatabaseEntities();
-            CascadingModel model = new CascadingModel();
-            foreach (var category in entities.Categories)
-            {
-                model.Categories.Add(new SelectListItem { Text = category.Category_Name, Value = category.Category_ID.ToString() });
-            }
-            return View(model);
+            Service service = new Service();
+            List<Category> categories = service.GetAllCategory();
+            // identify which page now we are in
+            Session["page"] = "Search";
+            return View(categories);
         }
 
-        public ActionResult _Search()
+        public ActionResult GetSubCategoryName(int categoryid)
         {
-            JooleDAL.JooleDatabaseEntities entities = new JooleDAL.JooleDatabaseEntities();
-            CascadingModel model = new CascadingModel();
-            foreach (var category in entities.Categories)
+            Service service = new Service();
+            List<SubCategory> subcategories = service.GetAllSubcategoryByCategoryID(categoryid);
+            /*return Json(subcategories, JsonRequestBehavior.AllowGet);*/
+            string output = "";
+            foreach (var item in subcategories)
             {
-                model.Categories.Add(new SelectListItem { Text = category.Category_Name, Value = category.Category_ID.ToString() });
+                output = output + item.SubCategory_Name.ToString() + ",";
             }
-            return View(model);
-        }
+            int index = output.LastIndexOf(",");
+            output = output.Remove(index, 1);
+            return Content(output);
 
-        [HttpPost]
-        public ActionResult _Search(int? Category_ID, int? SubCategory_ID)
-        {
-            JooleDAL.JooleDatabaseEntities entities = new JooleDAL.JooleDatabaseEntities();
-            CascadingModel model = new CascadingModel();
-            foreach (var category in entities.Categories)
-            {
-                model.Categories.Add(new SelectListItem { Text = category.Category_Name, Value = category.Category_ID.ToString() });
-            }
-
-            if (Category_ID.HasValue)
-            {
-                var subcategories = (from sub in entities.SubCategories
-                                     where sub.Category_ID == Category_ID.Value
-                                     select sub).ToList();
-                foreach (var subcategory in subcategories)
-                {
-                    model.SubCategories.Add(new SelectListItem { Text = subcategory.SubCategory_Name, Value = subcategory.SubCategory_ID.ToString() });
-                }
-
-                /*if (stateId.HasValue)
-                {
-                    var cities = (from city in entities.Cities
-                                  where city.StateId == stateId.Value
-                                  select city).ToList();
-                    foreach (var city in cities)
-                    {
-                        model.Cities.Add(new SelectListItem { Text = city.CityName, Value = city.CityId.ToString() });
-                    }
-                }*/
-            }
-
-            return View("Search", model);
         }
     }
 }

@@ -42,14 +42,18 @@ namespace JooleProject.Controllers
         [HttpPost]
         public ActionResult Signup(JooleDAL.User obj)
         {
+            //create database context using Entity framework 
             using (var databaseContext = new JooleDAL.JooleDatabaseEntities())
             {
+                //If the model state is valid i.e. the form values passed the validation then we are storing the User's details in DB.
                 JooleDAL.User user = new JooleDAL.User
                 {
+                    //Save all details in obj object
                     User_Name = obj.User_Name,
-                    User_Password = obj.User_Password,
                     User_Email = obj.User_Email,
-                    Credential_ID = obj.Credential_ID,
+                    User_Password = obj.User_Password,
+                    //User_ConfirmPassword = obj.User_ConfirmPassword,                 
+                    Credential_ID = obj.Credential_ID
                 };
 
                 databaseContext.Users.Add(user);

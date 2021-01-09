@@ -276,21 +276,27 @@
 
     <!-- The Modal -->
     <div id="myModal" class="modal">
-
-        @*Sign up form here*@
-        <!-- Modal content -->
-        @using (Html.BeginForm("Signup", "Login", FormMethod.Post, new { @class = "modal-content"}))
+        @using (Html.BeginForm("Signup", "Login", FormMethod.Post, new { @class = "modal-content" }))
         {
+            @*<div class="container">*@
+            @*The <span> tag is much like the <div> element, but <div> is a block-level element and <span> is an inline element.*@
+            @*<div class="close_container">*@
             <span class="close" id="circle">&times;</span>
+            @*</div>*@
+
             <h2 style="font-size: 22px; font-weight: normal">Register as User</h2>
             <hr>
+
             <table>
+                @*image here*@
                 <tr>
                     <td></td>
                     <td><label for="avatar" class="imageelement"><b>Image Preview</b></label></td>
                 </tr>
+
                 <tr>
                     <td></td>
+                    @*<td><input type="image" id="output_image" alt="image" class="imageelement"></td>*@
                     <td><img id="output_image" class="imageelement"></td>
                 </tr>
 
@@ -306,36 +312,40 @@
 
                 <tr>
                     <td><label for="name"><b>UserName:</b></label></td>
-                    <td>
-                        @Html.TextBoxFor(model => model.User_Name)
-                    </td>
-                </tr>
-
-                <tr>
-                    <td><label for="credential"><b>Credential ID:</b></label></td>
-                    <td>
-                        @Html.TextBoxFor(model => model.Credential_ID)
-                    </td>
+                    <td>@Html.TextBoxFor(model => model.User_Name, new { @class = "field", placeholder = "User Name" })</td>
+                    <td>@Html.ValidationMessageFor(model => model.User_Name)</td>
                 </tr>
 
                 <tr>
                     <td><label for="email"><b>Email Address:</b></label></td>
-                    <td>
-                        @Html.TextBoxFor(model => model.User_Email)
-                    </td>
+                    <td>@Html.TextBoxFor(model => model.User_Email, new { @class = "field", placeholder = "Email Id" })</td>
+                    <td>@Html.ValidationMessageFor(model => model.User_Email)</td>
                 </tr>
 
                 <tr>
                     <td><label for="password"><b>Password:</b></label></td>
-                    <td>
-                        @Html.PasswordFor(model => model.User_Password)
-                    </td>
+                    <td>@Html.PasswordFor(model => model.User_Password, new { @class = "field", placeholder = "Password" })</td>
+                    <td>@Html.ValidationMessageFor(model => model.User_Password)</td>
+                </tr>
+
+                <tr>
+                    <td><label for="password"><b>Confirm Password:</b></label></td>
+                    @*<td>@Html.PasswordFor(model => model.User_ConfirmPassword, new { @class = "field" })</td>
+                    <td>@Html.ValidationMessageFor(model => model.User_ConfirmPassword)</td>*@
+                    <td><input type="password" placeholder="Password" class="field" required></td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td><label for="credential"><b>Credential ID:</b></label></td>
+                    <td>@Html.TextBoxFor(model => model.Credential_ID, new { @class = "field", placeholder = "Credential Id" })</td>
+                    <td>@Html.ValidationMessageFor(model => model.Credential_ID)</td>
                 </tr>
             </table>
             <hr>
             <input class="signupbutton" type="submit" value="Sign up" />
+            @*</div>*@
         }
-
     </div>
 
     <script>
@@ -377,21 +387,5 @@
         }
     </script>
 
-    @*<script>
-            jQuery(document).ready(function () {
-
-                var mouseX = 0, mouseY = 0;
-                var xp = 0, yp = 0;
-                $(document).mousemove(function (e) {
-                    mouseX = e.pageX - 30;
-                    mouseY = e.pageY - 30;
-                });
-                setInterval(function () {
-                    xp += ((mouseX - xp) / 6);
-                    yp += ((mouseY - yp) / 6);
-                    $("#circle").css({ left: xp + 'px', top: yp + 'px' });
-                }, 20);
-            });
-        </script>*@
 </body>
 </html>
