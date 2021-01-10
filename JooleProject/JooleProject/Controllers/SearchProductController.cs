@@ -54,6 +54,14 @@ namespace JooleProject.Controllers
             Service service = new Service();
             List<Category> categories = service.GetAllCategory();
             // identify which page now we are in
+            ViewBag.productDetails = new List<Dictionary<string, Dictionary<string, string>>>();
+
+            foreach (var item in productsId)
+            {
+                Dictionary<string, Dictionary<string, string>> productDetails = service.GetDetailsByProductId(item);
+                ViewBag.productDetails.Add(productDetails);
+            }
+
             Session["page"] = "Search";
 
             return View(categories);
