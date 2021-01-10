@@ -179,9 +179,10 @@
             
             <tr class="compare-row">
                 <td>DESCRIPTION</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                @for (int i = 0; i < ViewBag.productDetails.Count; i++)
+                {
+                    <td></td>
+                }
             </tr>
             @{
                 foreach (var key in @ViewBag.productDetails[0]["DESCRIPTION"].Keys)
@@ -202,9 +203,10 @@
 
             <tr class="compare-row">
                 <td>TYPE</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                @for (int i = 0; i < ViewBag.productDetails.Count; i++)
+                {
+                    <td></td>
+                }
             </tr>
             @{
 
@@ -226,9 +228,10 @@
 
             <tr class="compare-row">
                 <td>TECH SPEC</td>
-                <td></td>
-                <td></td>
-                <td></td>
+                @for (int i = 0; i < ViewBag.productDetails.Count; i++)
+                {
+                    <td></td>
+                }
             </tr>
             @{
                 foreach (string key in @ViewBag.productDetails[1]["TECHNICAL SPECIFICATIONS"].Keys)

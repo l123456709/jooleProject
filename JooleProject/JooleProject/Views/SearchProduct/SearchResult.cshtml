@@ -192,11 +192,11 @@
 
         for (let i = 0; i < checkboxs.length; i++) {
             if (checkboxs[i].checked) {
-                productsID.push(checkboxs[i].val);
+                productsID.push(checkboxs[i].id);
             }
         }
 
-        console.log(productsID);
+        console.log("productsID:", productsID);
         $.post("@Url.Action("Compare", "SearchProduct")",
             {
                 productsId: productsID
@@ -263,7 +263,7 @@
 
         console.log(fltVal);
 
-        $.post("@Url.Action("Filter", "SearchProduct")",
+        $.post ("@Url.Action("Filter", "SearchProduct")",
             {
                 fltVal: fltVal,
                 subCategory: subCategory
